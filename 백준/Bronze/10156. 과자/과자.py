@@ -1,10 +1,6 @@
-numbers = input().split()
-price = int(numbers[0])
-howmany = int(numbers[1])
-money = int(numbers[2])
-needMoney = int(money-(price*howmany))
+K, N, M = map(int, input().split())
 
-if needMoney >= 0:
+if K * N > M:
+    print(K * N - M)
+else:
     print(0)
-elif needMoney < 0:
-    print(needMoney*-1)
