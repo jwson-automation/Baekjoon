@@ -1,31 +1,21 @@
 import sys
-from collections import deque
 
-input = sys.stdin.readline
+n = int(input())
+graph = [0]
+dp = [0 for _ in range (n+1)]
+for _ in range (n):
+    graph.append(int(input()))
 
-t = int(input())
-stairs = deque()
-dp = [0 for _ in range (t+1)]
+dp[0] = 0
 
-for _ in range(t):
-    temp = int(input())
-    stairs.append(temp)
+dp[1] = graph[1]
 
-dp[0] = stairs[0]
+if n > 1:
+    dp[2] = max(graph[2] + graph[1], graph[2] + graph[0])
+if n > 2:
+    dp[3] = max(graph[3] + graph[2] + graph[0] , graph[3] + graph[1] + graph[0])
+if n > 3:    
+    for i in range (4,n+1):
+        dp[i] = max( graph[i] + graph[i-1] + dp[i-3], graph[i] + dp[i-2] )
 
-if t ==1:
-    print(dp[0])
-    sys.exit(0)
-
-dp[1]=stairs[1]+stairs[0]
-
-if t ==2:
-    print(dp[1])
-    sys.exit(0)
-
-dp[2] = max(stairs[0]+stairs[2],stairs[1]+stairs[2])
-
-for i in range(3,t):
-    dp[i] = max(dp[i-2]+stairs[i],dp[i-3]+stairs[i-1]+stairs[i])
-
-print(dp[t-1])
+print(dp[n])
