@@ -1,27 +1,20 @@
 n = int(input())
 
-graph = []
+g = []
 for _ in range (n):
-    graph += list(map(int,input().split()))
-# print(graph)
+    g += list(map(int,input().split()))
 
 dp = [0]*(n*n)
 dp[0] = 1 
-graph[-1] = 1
+g[-1] = 1
 
-for cur_number in range(n*n):
-    if dp[cur_number] != 0 or cur_number == 0 :
-        # print(cur_number)
-        moving_number = graph[cur_number]
-        # x축 그냥 더하기
-        if  moving_number + cur_number%n <n:
-            dp[moving_number + cur_number] += dp[cur_number]
+for t in range(n*n):
+    if dp[t] != 0 or t == 0 :
+        m = g[t]
+        if  m + t%n <n:
+            dp[m + t] += dp[t]
 
-        # y축 n만큼 곱하기
-        if moving_number + cur_number//n < n:
-            dp[((cur_number//n + moving_number)*n) + cur_number%n] += dp[cur_number]
+        if m + t//n < n:
+            dp[((t//n + m)*n) + t%n] += dp[t]
             
-        
-
-# print(dp)
 print(dp[(n*n)-1])
