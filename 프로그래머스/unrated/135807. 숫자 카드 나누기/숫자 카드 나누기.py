@@ -1,39 +1,45 @@
-# gcd 최소공배수는 math에서 가져오기
-from math import gcd
+# 최대공약수 함수 가져오기
+def gcd(x, y):
+    while y:
+        x, y = y, x % y
+    if x == 1 :
+        x = 0
+    return x
 
-# 배열 속 최소 공배수를 계산
-def get_gcd(arr):
-    g = arr[0]
-    for i in range(len(arr)):
-        g = gcd(g, arr[i])
-    return g
-
+# 조건에 맞는지 확인하는 함수
+def option(gcd_a, array):
+    for number in array:
+        if gcd_a > number or gcd(gcd_a, number) == 0 :
+            return True
+        return False
 
 def solution(arrayA, arrayB):
 
-    answer = 0
-    # 각 배열의 최소 공배수 계산
-    gA, gB = get_gcd(arrayA), get_gcd(arrayB)
+    # A배열의 최대공약수 구하기
+    gcd_arrayA = gcd(arrayA[0],arrayA[1])
 
-    # 조건에 맞는지 확인
-    for b in arrayB:
-        # 나누어 떨어지면 중지
-        if not b % gA:
-            break
+    for i in range(2, len(arrayA)-1):
+        if gcd_arrayA != 0 :
+            gcd_arrayA = gcd(gcd_arrayA,arrayA[i])
 
-        # 나누어 떨어지지 않으면 정답에 추가
-    else:
-        answer = max(answer, gA)
-            
-    # 조건에 맞는지 확인
-    for a in arrayA:
-        # 나누어 떨어지면 중지
-        if not a % gB:
-            break
-            
-        
-        # 나누어 떨어지지 않으면 정답에 추가
-    else:
-        answer = max(answer, gB)
+    # B 배열의 최대공약수 구하기
+    gcd_arrayB = gcd(arrayB[0],arrayB[1])
 
-    return answer
+    for i in range(2, len(arrayB)-1):
+        if gcd_arrayB != 0 :
+            gcd_arrayB = gcd(arrayB,arrayB[i])
+
+
+    # 조건에 맞다면 정답에 넣어주기
+    answer = []
+
+    if(option(gcd_arrayA,arrayB)):
+        answer.append(gcd_arrayA)
+    if(option(gcd_arrayB,arrayA)):
+        answer.append(gcd_arrayB)
+    
+    if not answer:
+        return 0
+    return (max(answer))
+
+
